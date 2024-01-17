@@ -11,6 +11,7 @@ export default function ProfileUser() {
       .then((data) => setProfilData(data))
       .catch((error) => console.error(error));
   }, []);
+  console.log(profilData);
 
   return (
     <>

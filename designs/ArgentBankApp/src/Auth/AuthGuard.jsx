@@ -4,7 +4,8 @@ import { Navigate } from 'react-router-dom';
 
 export default function AuthGuard({ children }) {
   if (!accountServices.isLogged()) {
-    return <Navigate to='/profil' />;
+    console.log(!accountServices.isLogged());
+    return <Navigate to='/login' />;
   }
   return children;
 }

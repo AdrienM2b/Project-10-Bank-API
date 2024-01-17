@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { accountServices } from './account.services';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { authService } from './authServices';
 import { useAuth } from './AuthContext';
+import { useDispatch } from 'react-redux';
+import { setCredentials, setToken } from '../store/authSlice';
 
 export default function SignInForm() {
+  const dispatch = useDispatch();
   const { login } = useAuth();
   let navigate = useNavigate();
 
-  const [credentials, setCredentials] = useState({
+  const [credentials, setFormCredentials] = useState({
     email: 'tony@stark.com',
     password: 'password123',
   });
 
   const onChange = (e) => {
-    setCredentials({
+    setFormCredentials({
       ...credentials,
       [e.target.name]: e.target.value,
     });
@@ -28,6 +30,8 @@ export default function SignInForm() {
       .login(credentials)
       .then((response) => {
         console.log(response.data);
+        dispatch(setCredentials(credentials));
+        dispatch(setToken(response.data.body.token));
         login(response.data.body.token);
         navigate('/profil');
       })

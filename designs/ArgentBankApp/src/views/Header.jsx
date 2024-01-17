@@ -1,16 +1,23 @@
 import React from 'react';
 import '../styles/argentBank.scss';
 import logoApp from '../assets/argentBankLogo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleUser,
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../Auth/AuthContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { logOut, selectisLogged, selectCurrentUser } from '../store/authSlice';
 
 export default function Header() {
-  const { isAuthenticated, logout } = useAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLogged = useSelector(selectisLogged);
+  const logout = () => {
+    dispatch(logOut());
+    navigate('/');
+  };
 
   return (
     <nav className='main-nav'>
@@ -22,7 +29,7 @@ export default function Header() {
         />
         <h1 className='sr-only'>Argent Bank</h1>
       </Link>
-      {isAuthenticated ? (
+      {isLogged ? (
         <Link to='/' name='signout' onClick={logout}>
           <FontAwesomeIcon icon={faRightFromBracket} />
           Sign Out

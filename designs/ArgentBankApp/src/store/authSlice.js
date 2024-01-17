@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { login, getProfil } from '../Auth/authServices';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -20,6 +21,26 @@ const authSlice = createSlice({
       state.token = null;
       state.isLogged = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.token = payload.body.token;
+      })
+      .addCase(login.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.errorMessage = payload;
+      })
+      .addCase(getProfil.fulfilled, (state, { payload }) => {
+        state.user = payload;
+        state.isLogged = true;
+      });
   },
 });
 

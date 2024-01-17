@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import { authService } from './authServices';
-import { useAuth } from './AuthContext';
 import { useDispatch } from 'react-redux';
-import { setCredentials, setToken } from '../store/authSlice';
+import { onSubmit } from '../Auth/auth';
 
 export default function SignInForm() {
   const dispatch = useDispatch();
-  const { login } = useAuth();
   let navigate = useNavigate();
 
   const [credentials, setFormCredentials] = useState({
@@ -24,27 +21,16 @@ export default function SignInForm() {
     });
   };
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    authService
-      .login(credentials)
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setCredentials(credentials));
-        dispatch(setToken(response.data.body.token));
-        login(response.data.body.token);
-        navigate('/profil');
-      })
-      .catch((error) => {
-        console.error('Erreur lors de la connexion:', error);
-      });
+    onSubmit(dispatch, credentials, navigate);
   };
 
   return (
     <section className='sign-in-content'>
       <FontAwesomeIcon icon={faCircleUser} />
       <h1>Sign In</h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className='input-wrapper'>
           <label htmlFor='username'>Username</label>
           <input

@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from './Header';
-import { profilServices } from '../Auth/authServices';
 
 export default function ProfileUser() {
-  const [profilData, setProfilData] = useState();
-
-  useEffect(() => {
-    profilServices
-      .getProfil()
-      .then((data) => setProfilData(data))
-      .catch((error) => console.error(error));
-  }, []);
-  console.log(profilData);
-
   return (
     <>
       <Header />

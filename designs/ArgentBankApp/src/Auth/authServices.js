@@ -1,3 +1,4 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:3001/api/v1/user/';
@@ -13,13 +14,10 @@ const API_URL = 'http://localhost:3001/api/v1/user/';
  * @returns {Promise<body{token: string}>}
  */
 
-const login = (credentials) => {
-  return axios.post(API_URL + 'login', credentials);
-};
-
-export const authService = {
-  login,
-};
+export const login = createAsyncThunk('auth/login', async (credentials) => {
+  const response = await axios.post(API_URL + 'login', credentials);
+  return response.data;
+});
 
 /**
  * 
@@ -38,27 +36,19 @@ export const authService = {
  * @returns {Promise<body>}
  */
 
-const getProfil = async () => {
-  const token = localStorage.getItem('token');
-  console.log(token);
-  const profilData = {
-    email: 'tony@stark.com',
-    password: 'password123',
-  };
-  const config = {
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
+export const getProfil = createAsyncThunk(
+  'profil/getProfil',
+  async (_, { getState }) => {
+    const token = getState().auth.token;
+    const profilData = getState().auth.user;
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-  try {
     const response = await axios.post(API_URL + 'profile', profilData, config);
-    console.log(response.data);
     return response.data;
-  } catch (error) {
-    console.error('Erreur lors de la connexion:', error);
   }
-};
-
-export const profilServices = { getProfil };
+);

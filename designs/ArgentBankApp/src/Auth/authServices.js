@@ -52,3 +52,37 @@ export const getProfil = createAsyncThunk(
     return response.data;
   }
 );
+
+/**
+ * 
+ * @param {
+* {
+  * email: string,
+  * password: string
+  * }
+  * } profilData
+  @param {
+    * {
+    * Accept: string,
+    * Authorization: string
+    * }
+    * } config
+   * @returns {Promise<body{id: string, email: string}>}
+   */
+
+export const updateProfil = createAsyncThunk(
+  'profil/updateProfil',
+  async (_, { getState }) => {
+    const token = getState().auth.token;
+    const profilData = getState().auth.user;
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios.put(API_URL + 'profile', profilData, config);
+    return response.data;
+  }
+);

@@ -1,5 +1,5 @@
 import { setCredentials, setToken } from '../store/authSlice';
-import { getProfil, login } from './authServices';
+import { getProfil, login, updateProfil } from './authServices';
 
 export const onSubmit = (dispatch, credentials, navigate) => {
   dispatch(setCredentials(credentials));
@@ -19,4 +19,9 @@ export const onSubmit = (dispatch, credentials, navigate) => {
     .catch((error) => {
       console.error('Erreur lors de la connexion:', error);
     });
+};
+
+const updateUserInfos = (credentials) => {
+  dispatch(setCredentials(credentials));
+  return dispatch(updateProfil(credentials)).then((response) => {});
 };

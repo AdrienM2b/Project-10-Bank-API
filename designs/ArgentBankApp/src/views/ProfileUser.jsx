@@ -1,18 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Header from './Header';
+import {
+  selectCurrentUserFirstName,
+  selectCurrentUserLastName,
+} from '../store/authSlice';
+import { useSelector } from 'react-redux';
 
 export default function ProfileUser() {
+  const currentUserFirstName = useSelector(selectCurrentUserFirstName);
+  const currentUserLastName = useSelector(selectCurrentUserLastName);
+
+  const handleClick = () => {};
   return (
     <>
       <Header />
       <main className='main bg-dark'>
         <div className='header'>
-          <h1>
-            Welcome back
-            <br />
-            Tony Jarvis!
-          </h1>
-          <button className='edit-button'>Edit Name</button>
+          <h1>Welcome back</h1>
+          <div className='user-infos_container'>
+            <input type='text' placeholder={currentUserFirstName} />
+            <input type='text' placeholder={currentUserLastName} />
+          </div>
+          <div className='button_container'>
+            <button className='save-button' onClick={handleClick}>
+              Save
+            </button>
+            <button className='cancel-button'>Cancel</button>
+          </div>
         </div>
         <h2 className='sr-only'>Accounts</h2>
         <section className='account'>

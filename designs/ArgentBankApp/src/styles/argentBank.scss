@@ -17,7 +17,7 @@ body {
 }
 
 .bg-dark {
-  background-color: #12002b;
+  background-color: rgb(203, 205, 218);
 }
 
 .sr-only {
@@ -67,6 +67,19 @@ body {
 .main-nav-logo-image {
   max-width: 100%;
   width: 200px;
+}
+
+// Header
+
+.nav_container {
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.icon-user_container {
+  display: flex;
+  align-items: center;
 }
 
 .hero {
@@ -260,17 +273,40 @@ body {
   flex: 1;
 }
 
-.edit-button {
-  border-color: #00bc77;
-  background-color: #00bc77;
-  color: #fff;
-  font-weight: bold;
-  padding: 10px;
-}
-
 .header {
+  width: 100%;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
   color: #fff;
   margin-bottom: 2rem;
+  .user-infos_container {
+    width: 50%;
+    gap: 5%;
+    display: flex;
+    justify-content: center;
+    input {
+      width: 15vw;
+      height: 3vh;
+    }
+  }
+  .button_container {
+    width: 50%;
+    gap: 5%;
+    display: flex;
+    justify-content: center;
+    button {
+      width: 10vw;
+      height: 4vh;
+      border-radius: 0;
+      border-color: #7c02ff;
+      background-color: white;
+      color: #7c02ff;
+      font-size: 12px;
+    }
+  }
 }
 
 .transaction-button {
@@ -280,8 +316,7 @@ body {
   font-size: 1.1rem;
   font-weight: bold;
   margin-top: 1rem;
-  border-color: #00bc77;
-  background-color: #00bc77;
+  background-color: #7c02ff;
   color: #fff;
 }
 

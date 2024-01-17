@@ -8,12 +8,17 @@ import {
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { logOut, selectisLogged, selectCurrentUser } from '../store/authSlice';
+import {
+  logOut,
+  selectisLogged,
+  selectCurrentUserFirstName,
+} from '../store/authSlice';
 
 export default function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector(selectisLogged);
+  const userInfos = useSelector(selectCurrentUserFirstName);
   const logout = () => {
     dispatch(logOut());
     navigate('/');
@@ -30,10 +35,18 @@ export default function Header() {
         <h1 className='sr-only'>Argent Bank</h1>
       </Link>
       {isLogged ? (
-        <Link to='/' name='signout' onClick={logout}>
-          <FontAwesomeIcon icon={faRightFromBracket} />
-          Sign Out
-        </Link>
+        <div className='nav_container'>
+          <Link to='/profil'>
+            <div className='icon-user_container'>
+              <FontAwesomeIcon icon={faCircleUser} />
+              <p>{userInfos}</p>
+            </div>
+          </Link>
+          <Link to='/' name='signout' onClick={logout}>
+            <FontAwesomeIcon icon={faRightFromBracket} />
+            Sign Out
+          </Link>
+        </div>
       ) : (
         <Link to='/login' name='signin'>
           <FontAwesomeIcon icon={faCircleUser} />

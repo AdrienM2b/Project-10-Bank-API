@@ -4,29 +4,58 @@ import {
   selectCurrentUserFirstName,
   selectCurrentUserLastName,
 } from '../store/authSlice';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUserInfos } from '../Auth/auth';
 
 export default function ProfileUser() {
+  const dispatch = useDispatch();
   const currentUserFirstName = useSelector(selectCurrentUserFirstName);
   const currentUserLastName = useSelector(selectCurrentUserLastName);
 
-  const handleClick = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target.firstName.value);
+    const newFirstName = e.target.firstName.value;
+    const newLastName = e.target.lastName.value;
+    const newUserInfos = { firstName: newFirstName, lastName: newLastName };
+    console.log(newUserInfos);
+    updateUserInfos(dispatch, newUserInfos);
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    const inputFirstName = e.target.form.firstName;
+    const inputLastName = e.target.form.lastName;
+    inputFirstName.value = '';
+    inputLastName.value = '';
+  };
+
   return (
     <>
       <Header />
       <main className='main bg-dark'>
         <div className='header'>
           <h1>Welcome back</h1>
-          <div className='user-infos_container'>
-            <input type='text' placeholder={currentUserFirstName} />
-            <input type='text' placeholder={currentUserLastName} />
-          </div>
-          <div className='button_container'>
-            <button className='save-button' onClick={handleClick}>
-              Save
-            </button>
-            <button className='cancel-button'>Cancel</button>
-          </div>
+          <form onSubmit={handleSubmit} className='profil-user-form_container'>
+            <div className='user-infos_container'>
+              <input
+                type='text'
+                placeholder={currentUserFirstName}
+                name='firstName'
+              />
+              <input
+                type='text'
+                placeholder={currentUserLastName}
+                name='lastName'
+              />
+            </div>
+            <div className='button_container'>
+              <button className='save-button'>Save</button>
+              <button className='cancel-button' onClick={handleDelete}>
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
         <h2 className='sr-only'>Accounts</h2>
         <section className='account'>

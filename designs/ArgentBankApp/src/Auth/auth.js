@@ -1,4 +1,9 @@
-import { setCredentials, setToken } from '../store/authSlice';
+import {
+  setCredentials,
+  setNames,
+  setToken,
+  updateCredentials,
+} from '../store/authSlice';
 import { getProfil, login, updateProfil } from './authServices';
 
 export const onSubmit = (dispatch, credentials, navigate) => {
@@ -12,7 +17,8 @@ export const onSubmit = (dispatch, credentials, navigate) => {
     .then(() => {
       return dispatch(getProfil()).then((response) => {
         const user = response.payload.body;
-        dispatch(setCredentials(user));
+        const { firstName, lastName } = user;
+        dispatch(setNames({ firstName, lastName }));
         navigate('/profil');
       });
     })
@@ -21,7 +27,14 @@ export const onSubmit = (dispatch, credentials, navigate) => {
     });
 };
 
-const updateUserInfos = (credentials) => {
-  dispatch(setCredentials(credentials));
-  return dispatch(updateProfil(credentials)).then((response) => {});
+export const updateUserInfos = (dispatch, credentials) => {
+  dispatch(updateCredentials(credentials));
+  console.log(credentials);
+  return dispatch(updateProfil(credentials))
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error('Erreur lors de la connexion:', error);
+    });
 };

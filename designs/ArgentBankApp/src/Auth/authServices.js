@@ -74,7 +74,10 @@ export const updateProfil = createAsyncThunk(
   'profil/updateProfil',
   async (_, { getState }) => {
     const token = getState().auth.token;
-    const profilData = getState().auth.user;
+    const profilData = {
+      firstName: getState().auth.userFirstName,
+      lastName: getState().auth.userLastName,
+    };
     const config = {
       headers: {
         Accept: 'application/json',

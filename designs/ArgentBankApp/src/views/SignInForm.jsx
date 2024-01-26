@@ -9,20 +9,23 @@ export default function SignInForm() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  const [credentials, setFormCredentials] = useState({
-    email: 'tony@stark.com',
-    password: 'password123',
-  });
-
-  const onChange = (e) => {
-    setFormCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value,
-    });
-  };
+  /**
+   * Cette fonction gère la soumission du formulaire de connexion.
+   * Elle dispatche une action de connexion avec les informations d'identification de l'utilisateur,
+   * puis, une fois la connexion réussie, elle dispatche une action pour obtenir le profil de l'utilisateur
+   * et navigue vers la page de profil de l'utilisateur.
+   *
+   * @param {Function} dispatch
+   * @param {{email: string, password: string}} credentials - Les informations d'identification de l'utilisateur.
+   * @param {Function} navigate
+   * @returns {Promise}
+   */
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const userEmail = e.target.email.value;
+    const userPassword = e.target.password.value;
+    const credentials = { email: userEmail, password: userPassword };
     onSubmit(dispatch, credentials, navigate);
   };
 
@@ -37,8 +40,8 @@ export default function SignInForm() {
             type='text'
             id='username'
             name='email'
-            value={credentials.email}
-            onChange={onChange}
+            // value={credentials.email}
+            // onChange={onChange}
           />
         </div>
         <div className='input-wrapper'>
@@ -47,15 +50,17 @@ export default function SignInForm() {
             type='password'
             id='password'
             name='password'
-            value={credentials.password}
-            onChange={onChange}
+            // value={credentials.password}
+            // onChange={onChange}
           />
         </div>
         <div className='input-remember'>
           <input type='checkbox' id='remember-me' />
           <label htmlFor='remember-me'>Remember me</label>
         </div>
-        <button className='sign-in-button'>Sign In</button>
+        <button type='submit' className='sign-in-button'>
+          Sign In
+        </button>
       </form>
     </section>
   );

@@ -1,16 +1,14 @@
 import React from 'react';
 import Header from './Header';
-import {
-  selectCurrentUserFirstName,
-  selectCurrentUserLastName,
-} from '../store/authSlice';
+import { selectCurrentUser } from '../store/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserInfos } from '../Auth/auth';
 
 export default function ProfileUser() {
   const dispatch = useDispatch();
-  const currentUserFirstName = useSelector(selectCurrentUserFirstName);
-  const currentUserLastName = useSelector(selectCurrentUserLastName);
+  const currentUser = useSelector(selectCurrentUser);
+  const currentUserFirstName = currentUser.firstName;
+  const currentUserLastName = currentUser.lastName;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,7 +48,9 @@ export default function ProfileUser() {
               />
             </div>
             <div className='button_container'>
-              <button className='save-button'>Save</button>
+              <button type='submit' className='save-button'>
+                Save
+              </button>
               <button className='cancel-button' onClick={handleDelete}>
                 Cancel
               </button>

@@ -6,8 +6,6 @@ const authSlice = createSlice({
   initialState: {
     isLogged: false,
     user: null,
-    userFirstName: null,
-    userLastName: null,
     token: null,
   },
   reducers: {
@@ -17,19 +15,14 @@ const authSlice = createSlice({
     setCredentials: (state, action) => {
       state.user = action.payload;
     },
-    setNames: (state, action) => {
-      state.userFirstName = action.payload.firstName;
-      state.userLastName = action.payload.lastName;
-      state.isLogged = true;
-    },
     logOut: (state) => {
       state.user = null;
       state.token = null;
       state.isLogged = false;
     },
     updateCredentials: (state, action) => {
-      state.userFirstName = action.payload.firstName;
-      state.userLastName = action.payload.lastName;
+      state.user.firstName = action.payload.firstName;
+      state.user.lastName = action.payload.lastName;
     },
   },
   extraReducers: (builder) => {
@@ -58,7 +51,8 @@ export const { setToken, setCredentials, logOut, updateCredentials, setNames } =
   authSlice.actions;
 export default authSlice.reducer;
 
-export const selectCurrentUserFirstName = (state) => state.auth.userFirstName;
-export const selectCurrentUserLastName = (state) => state.auth.userLastName;
+export const selectCurrentUser = (state) => state.auth.user;
+// export const selectCurrentUserFirstName = (state) => state.auth.user.firstName;
+// export const selectCurrentUserLastName = (state) => state.auth.user.lastName;
 export const selectCurrentToken = (state) => state.auth.token;
 export const selectisLogged = (state) => state.auth.isLogged;

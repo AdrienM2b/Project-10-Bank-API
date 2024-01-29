@@ -36,23 +36,11 @@ export default function SignInForm() {
       <form onSubmit={handleSubmit}>
         <div className='input-wrapper'>
           <label htmlFor='username'>Username</label>
-          <input
-            type='text'
-            id='username'
-            name='email'
-            // value={credentials.email}
-            // onChange={onChange}
-          />
+          <input type='text' id='username' name='email' />
         </div>
         <div className='input-wrapper'>
           <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            id='password'
-            name='password'
-            // value={credentials.password}
-            // onChange={onChange}
-          />
+          <input type='password' id='password' name='password' />
         </div>
         <div className='input-remember'>
           <input type='checkbox' id='remember-me' />

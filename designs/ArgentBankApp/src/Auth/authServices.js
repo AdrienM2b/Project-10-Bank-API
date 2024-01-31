@@ -22,7 +22,7 @@ export const login = createAsyncThunk('auth/login', async (credentials) => {
  */
 
 export const getProfil = createAsyncThunk(
-  'profil/getProfil',
+  'profile/getProfil',
   async (_, { getState }) => {
     const token = getState().auth.token;
     const config = {
@@ -44,7 +44,7 @@ export const getProfil = createAsyncThunk(
  */
 
 export const updateProfil = createAsyncThunk(
-  'profil/updateProfil',
+  'profile/updateProfil',
   async (_, { getState }) => {
     const token = getState().auth.token;
     const profilData = {

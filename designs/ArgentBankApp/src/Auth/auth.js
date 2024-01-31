@@ -25,7 +25,7 @@ export const onSubmit = (dispatch, credentials, navigate) => {
       return dispatch(getProfil()).then((response) => {
         const user = response.payload.body;
         dispatch(setCredentials(user));
-        navigate('/profil');
+        navigate('/profile');
       });
     })
     .catch((error) => {

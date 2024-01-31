@@ -32,7 +32,7 @@ export default function Header() {
       </Link>
       {isLogged ? (
         <div className='nav_container'>
-          <Link to='/profil'>
+          <Link to='/profile'>
             <div className='icon-user_container'>
               <FontAwesomeIcon icon={faCircleUser} />
               <p>{userInfos.firstName}</p>

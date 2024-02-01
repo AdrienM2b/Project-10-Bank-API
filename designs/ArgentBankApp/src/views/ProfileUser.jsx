@@ -12,11 +12,11 @@ export default function ProfileUser() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.firstName.value);
+    // console.log(e.target.firstName.value);
     const newFirstName = e.target.firstName.value;
     const newLastName = e.target.lastName.value;
     const newUserInfos = { firstName: newFirstName, lastName: newLastName };
-    console.log(newUserInfos);
+    // console.log(newUserInfos);
     updateUserInfos(dispatch, newUserInfos);
   };
 

@@ -35,7 +35,7 @@ export const onSubmit = (dispatch, credentials, navigate) => {
 
 /**
  * Cette fonction met à jour les informations de l'utilisateur.
- * Elle met à jour les informations d'identification et le profil de l'utilisateur.
+ * Elle met à jour le profil de l'utilisateur.
  *
  * @param {Function} dispatch
  * @param {{firstName: string, lastName: string}} credentials - Les nouvelles informations d'identification de l'utilisateur.
@@ -44,7 +44,7 @@ export const onSubmit = (dispatch, credentials, navigate) => {
 
 export const updateUserInfos = (dispatch, userInfos) => {
   dispatch(updateCredentials(userInfos));
-  console.log(userInfos);
+  // console.log(userInfos);
   return dispatch(updateProfil(userInfos))
     .then((response) => {
       console.log(response);

@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { onSubmit } from '../Auth/auth';
+import { useSelector } from 'react-redux';
+import { resetErrorMessage } from '../store/authSlice';
 
 export default function SignInForm() {
+  const errorMessage = useSelector((state) => state.auth.errorMessage);
+
   const dispatch = useDispatch();
   let navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(resetErrorMessage());
+  }, [dispatch]);
 
   /**
    * Cette fonction gère la soumission du formulaire de connexion.
@@ -42,6 +50,7 @@ export default function SignInForm() {
           <label htmlFor='password'>Password</label>
           <input type='password' id='password' name='password' />
         </div>
+        {errorMessage && <p className='error-message'>{errorMessage}</p>}
         <div className='input-remember'>
           <input type='checkbox' id='remember-me' />
           <label htmlFor='remember-me'>Remember me</label>

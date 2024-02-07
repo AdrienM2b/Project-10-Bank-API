@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import { selectCurrentUser } from '../store/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserInfos } from '../Auth/auth';
 
 export default function ProfileUser() {
+  const [editFormVisible, setEditFormVisible] = useState(false);
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentUserFirstName = currentUser.firstName;
@@ -12,12 +13,14 @@ export default function ProfileUser() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(e.target.firstName.value);
     const newFirstName = e.target.firstName.value;
     const newLastName = e.target.lastName.value;
-    const newUserInfos = { firstName: newFirstName, lastName: newLastName };
-    // console.log(newUserInfos);
+    const newUserInfos = {
+      firstName: newFirstName ? newFirstName : currentUserFirstName,
+      lastName: newLastName ? newLastName : currentUserLastName,
+    };
     updateUserInfos(dispatch, newUserInfos);
+    setEditFormVisible(!editFormVisible);
   };
 
   const handleDelete = (e) => {
@@ -34,28 +37,50 @@ export default function ProfileUser() {
       <main className='main bg-dark'>
         <div className='header'>
           <h1>Welcome back</h1>
-          <form onSubmit={handleSubmit} className='profil-user-form_container'>
-            <div className='user-infos_container'>
-              <input
-                type='text'
-                placeholder={currentUserFirstName}
-                name='firstName'
-              />
-              <input
-                type='text'
-                placeholder={currentUserLastName}
-                name='lastName'
-              />
-            </div>
-            <div className='button_container'>
-              <button type='submit' className='save-button'>
-                Save
-              </button>
-              <button className='cancel-button' onClick={handleDelete}>
-                Cancel
-              </button>
-            </div>
-          </form>
+          <h1>
+            {currentUserFirstName} {currentUserLastName} !
+          </h1>
+          <button
+            className='edit-button'
+            onClick={() => setEditFormVisible(!editFormVisible)}
+          >
+            Edit Name
+          </button>
+          {editFormVisible ? (
+            <form
+              onSubmit={handleSubmit}
+              className='profil-user-form_container'
+            >
+              <div className='user-infos_container'>
+                <button
+                  id='close-button'
+                  onClick={() => setEditFormVisible(false)}
+                >
+                  X
+                </button>
+                <input
+                  type='text'
+                  placeholder={currentUserFirstName}
+                  name='firstName'
+                />
+                <input
+                  type='text'
+                  placeholder={currentUserLastName}
+                  name='lastName'
+                />
+              </div>
+              <div className='button_container'>
+                <button type='submit' className='save-button'>
+                  Save
+                </button>
+                <button className='cancel-button' onClick={handleDelete}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          ) : (
+            ''
+          )}
         </div>
         <h2 className='sr-only'>Accounts</h2>
         <section className='account'>

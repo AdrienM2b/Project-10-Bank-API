@@ -24,6 +24,9 @@ const authSlice = createSlice({
       state.user.firstName = action.payload.firstName;
       state.user.lastName = action.payload.lastName;
     },
+    resetErrorMessage: (state) => {
+      state.errorMessage = null; // or ''
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -33,12 +36,13 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.errorMessage = null;
         state.token = payload.body.token;
       })
       .addCase(login.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.isSuccess = false;
-        state.errorMessage = payload;
+        state.errorMessage = payload || 'The username or the password is wrong';
       })
       .addCase(getProfil.fulfilled, (state, { payload }) => {
         state.user = payload;
@@ -47,8 +51,13 @@ const authSlice = createSlice({
   },
 });
 
-export const { setToken, setCredentials, logOut, updateCredentials, setNames } =
-  authSlice.actions;
+export const {
+  setToken,
+  setCredentials,
+  logOut,
+  updateCredentials,
+  resetErrorMessage,
+} = authSlice.actions;
 export default authSlice.reducer;
 
 export const selectCurrentUser = (state) => state.auth.user;
